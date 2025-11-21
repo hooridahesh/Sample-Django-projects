@@ -1,0 +1,29 @@
+{% load render_partial %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}{% endblock %}</title>
+    {% include 'shared/header_references.html' %}
+</head><!--/head-->
+
+<body>
+{% render_partial 'home.views.header_component' %}
+<!--
+چرا داریم از رندر می ریم؟ اگر همین بخش هدر رو داخل این فایل داشتیم و بعد می اومدیم
+داینامیکش می کردیم و بعدا سه تا تابع ویو داشتیم که سه تا فایل html متفاوت داشت و اون فایل های html
+هم از این فایل ارث بری می کردن در این لحظه هر تابعی که به این خط هدر که داینامیک بود می رسید
+باید خودش مقدار ها رو میداد و اینطوری توی هر سه تابع همش داشتیم مقدار تکراری می دادیم ولی با این کار
+یه فایل هدر می سازیم و یه تابع داریم و وقتی که به این خط render رسدیم می ره تابع رو صدا می زنه و داده
+به فایل هدر می فرسته و بعد اینجا نشونش میده
+بخاطر همین از render می ریم که داده داینامیک داشته باشیم الان
+-->
+{% block content %}{% endblock %}
+{% render_partial 'home.views.footer_component' %}
+{% include 'shared/footer_references.html' %}
+</body>
+</html>
