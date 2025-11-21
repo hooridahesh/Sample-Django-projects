@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block page_info %}
+    days
+{% endblock %}
+
+{% block content %}
+    {% include "days/includes/header.html" with active_page="days list" %}
+    <ul>
+        {% for day in days %}       <!--this is template tag-->
+            <li><a href="{% url 'day_unic' day %}"> {{ day|title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}  <!--داره ارث بری می کنه از این فایل بیس-->
+
+{% block page_info %}day_info{% endblock %}
+
+{% block content %}
+    {% include "days/includes/header.html" with active_page="day ditel" %}
+    <h1>{{ day|title }}</h1>
+    {% if day_data is not None %}
+        <h2 style="color: purple">{{ day_data|title }}</h2>   <!--format DTL-->
+        <!--and dajngo template filters used here whit pip}}-->
+    {% else %}
+        <h2 style="color: red">This is None</h2>
+    {% endif %}
+{% endblock %}
