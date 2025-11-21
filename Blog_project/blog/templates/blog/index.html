@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header_reference %}
+    <link rel="stylesheet" href="{% static 'blog/index.css' %}">
+{% endblock %}
+
+
+{% block title %}
+    My Blog
+{% endblock %}
+
+{% block content %}
+    <section id="welcome">
+        <header>
+            <img src="{% static 'blog/images/master.jpg' %}" alt="master">
+            <h2>Course blog project</h2>
+        </header>
+        <p>Hi, My name is hoori, I am a student learning Django</p>
+    </section>
+
+    <section id="latest-posts">
+        <h2>Latest Posts</h2>
+        <ul>
+            {% for post in latest_posts %}
+                {% include 'blog/includes/details.html' %}
+            {% endfor %}
+
+
+
+            {#            {% include 'blog/includes/details.html' %}#}
+            {#            {% include 'blog/includes/details.html' %}#}
+            {#            {% include 'blog/includes/details.html' %}#}
+            {#            {% include 'blog/includes/details.html' %}#}
+
+
+            {#            <li>#}
+            {#                <article class="post">#}
+            {#                    <a href="">#}
+            {#                        <img src="{% static 'blog/images/django1.png' %}" alt="learning django">#}
+            {#                        <div class="post__content">#}
+            {#                            <h3>Learning Django</h3>#}
+            {#                            <p>#}
+            {#                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, dolore dolores#}
+            {#                                ipsam itaque labore laudantium quo rem similique soluta voluptate?#}
+            {#                            </p>#}
+            {#                        </div>#}
+            {#                    </a>#}
+            {#                </article>#}
+            {#            </li>#}
+            {#            <li>#}
+            {#                <article class="post">#}
+            {#                    <a href="">#}
+            {#                        <img src="{% static 'blog/images/django2.png' %}" alt="learning django">#}
+            {#                        <div class="post__content">#}
+            {#                            <h3>Learning Django</h3>#}
+            {#                            <p>#}
+            {#                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, dolore dolores#}
+            {#                                ipsam itaque labore laudantium quo rem similique soluta voluptate?#}
+            {#                            </p>#}
+            {#                        </div>#}
+            {#                    </a>#}
+            {#                </article>#}
+            {#            </li>#}
+            {#            <li>#}
+            {#                <article class="post">#}
+            {#                    <a href="">#}
+            {#                        <img src="{% static 'blog/images/django3.png' %}" alt="learning django">#}
+            {#                        <div class="post__content">#}
+            {#                            <h3>Learning Django</h3>#}
+            {#                            <p>#}
+            {#                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, dolore dolores#}
+            {#                                ipsam itaque labore laudantium quo rem similique soluta voluptate?#}
+            {#                            </p>#}
+            {#                        </div>#}
+            {#                    </a>#}
+            {#                </article>#}
+            {#            </li>#}
+        </ul>
+    </section>
+
+    <section id="about">
+        <h2>What I Do</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid dicta, eius eos eum eveniet
+            perspiciatis quod soluta veritatis? Alias atque ducimus facere odit pariatur! Alias, aspernatur consequuntur
+            deleniti est fugit officiis porro quia saepe tenetur, veniam veritatis voluptatem voluptatum?
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad adipisci architecto atque autem
+            corporis deleniti deserunt enim eum fugiat hic laborum nam, natus nisi officia optio porro praesentium
+            provident qui quia repellat repellendus repudiandae saepe similique sit tenetur unde voluptatem. Distinctio
+            doloremque excepturi fugit harum iste quam sequi veritatis. Aliquam est labore laboriosam magnam maxime quos
+            unde voluptate voluptatem!
+        </p>
+    </section>
+
+{% endblock %}
