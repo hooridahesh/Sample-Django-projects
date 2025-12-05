@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "home",
     "contact_us",
     "account",
+    "site_module",
+    "order",
 
     "django_render_partial"
 ]
@@ -143,3 +145,13 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+"""---------------------------------------------------------------------------"""
+# برای اینکه بتونیم ایمیل بفرستیم برای کاربر کارهای زیر رو انجام میدیم:
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'  # ایمیلی که برای کاربر می فرستیم از gmail است
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587  # برای gmail از پورت 857 استفاده میشه

@@ -1,8 +1,10 @@
+from django.http import HttpRequest
 from django.shortcuts import render, get_object_or_404
 from .models import product
-from django.db.models import Avg
+from django.db.models import Avg, Count
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
+from .models import productCategory, productBrand
 
 # Create your views here.
 
@@ -40,11 +42,40 @@ class productListView(ListView):
     template_name = 'product/product_list.html'
     model = product
     context_object_name = 'products'
+    paginate_by = 3
+    """
+    برای paging صفحه میباشد که میگه توی هر صفحه فقط یه ایتم رو نشون بده
+    و این باعث میشه یکسری اطلاعات هم به صفحه html فرستاده بشه ینی یه چیزایی مثل paginator و..
+    و می تونیم ازشون استفاده کنیم اونجا 
+    """
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(productListView, self).get_context_data()
+        query = product.objects.all()
+        Product: product = query.order_by('-price').first()
+        db_max_price = Product.price if Product is not None else 0
+        context['db_max_price'] = db_max_price
+        context['start_price'] = self.request.GET.get('start_price') or 0
+        context['end_price'] = self.request.GET.get('end_price') or db_max_price
+        return context
 
     def get_queryset(self):
-        base_query = super(productListView, self).get_queryset()
-        data = base_query.filter(is_active=True)
-        return data
+        query = super(productListView, self).get_queryset()
+        category_name = self.kwargs.get('cat')
+        brand_name = self.kwargs.get('brand')
+        request: HttpRequest = self.request
+        start_price = request.GET.get('start_price')
+        end_price = request.GET.get('end_price')
+        if start_price is not None:
+            query = query.filter(price__gte=start_price)
+        if end_price is not None:
+            query = query.filter(price__lte=end_price)
+        if brand_name is not None:
+            query = query.filter(brand__url_title__iexact=brand_name)
+        if category_name is not None:
+            query = query.filter(category__url_title__iexact=category_name)
+
+        return query
 
 
 # class productDetailsView(TemplateView):
@@ -67,3 +98,17 @@ class productDetailsView(DetailView):
     template_name = 'product/product_detail.html'
     model = product
     context_object_name = 'product_detail'
+
+
+def product_categories_component(request):
+    product_categories = productCategory.objects.filter(is_active=True, is_delete=False)
+    return render(request, 'product/components/product_categories_component.html', {'categories': product_categories})
+
+
+def product_brands_component(request):
+    product_brands = productBrand.objects.annotate(product_counter=Count('product')).filter(is_active=True)
+    """
+    تابع annotate روی ابجکت اعمال میشه و میگه بیا اون دیتایی که میخوایی واکشی کن
+    و چیزهای اضافیه هم که نیاز داری من برات میارم و روی سطر هم اعمال میشه
+    """
+    return render(request, 'product/components/product_brands_component.html', {'brands': product_brands})

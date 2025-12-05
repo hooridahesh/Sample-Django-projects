@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from django.views.generic.base import TemplateView
+from site_module.models import siteSetting
 
 
 # Create your views here.
@@ -22,8 +23,10 @@ class homeView(TemplateView):
 
 
 def header_component(request):
-    return render(request, 'shared/header_component.html', {})
+    setting: siteSetting = siteSetting.objects.filter(is_main_setting=True).first()
+    return render(request, 'shared/header_component.html', {'site_setting': setting})
 
 
 def footer_component(request):
-    return render(request, 'shared/footer_component.html', {})
+    setting: siteSetting = siteSetting.objects.filter(is_main_setting=True).first()
+    return render(request, 'shared/footer_component.html', {'site_setting': setting})

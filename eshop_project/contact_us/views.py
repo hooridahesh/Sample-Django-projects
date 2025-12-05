@@ -5,6 +5,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import FormView
 from .forms import contactUsForms, contactUsFormModel, profileForms
 from .models import ContactUs, profilemodel
+from site_module.models import siteSetting
 
 # Create your views here.
 
@@ -58,6 +59,12 @@ class contactUsView(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(contactUsView, self).get_context_data(**kwargs)
+        setting: siteSetting = siteSetting.objects.filter(is_main_setting=True).first()
+        context['site_setting'] = setting
+        return context
 
 
 class createProfileView(View):

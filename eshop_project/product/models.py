@@ -22,6 +22,7 @@ class productCategory(models.Model):
 
 class productBrand(models.Model):
     title = models.CharField(max_length=200)
+    url_title = models.CharField(max_length=300, db_index=True)
     is_active = models.BooleanField()
 
     class Meta:
